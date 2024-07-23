@@ -1,102 +1,84 @@
-/* PaymentButton.css */
-
-/* General form styles */
 .payment-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
     max-width: 400px;
     margin: 0 auto;
-    padding: 16px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.payment-form h2 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-/* Card type selection styles */
-.card-type-selection {
+.progress-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.progress {
+    flex: 1;
+    height: 4px;
+    background: #000;
+    border-radius: 2px;
+}
+
+.card-type-selection {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.card-details label {
+    display: block;
     margin-bottom: 10px;
 }
 
-.card-type-selection label {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    cursor: pointer;
+.card-details input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.card-type-selection input[type="radio"] {
-    margin-right: 8px;
-    cursor: pointer;
-}
-
-/* Expiry and CVV fields */
 .expiry-cvv {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+}
+
+.expiry, .cvv {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.expiry label, .cvv label {
+    display: block;
     margin-bottom: 10px;
 }
 
-.expiry-cvv label {
-    font-size: 14px;
-    color: #333;
-}
-
-.expiry-cvv input[type="text"] {
-    width: 100px;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Card Element styles */
-.StripeElement {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Button styles */
-button {
-    padding: 12px 20px;
+.save-button {
+    width: 100%;
+    padding: 10px;
+    background: red;
+    color: #fff;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-button:disabled {
-    background-color: #ccc;
+.save-button:disabled {
+    background: #ccc;
     cursor: not-allowed;
 }
 
-button:hover:not(:disabled) {
-    background-color: #0056b3;
+.success, .error {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
 }
 
-/* Error message styles */
-.error {
-    color: #e74c3c;
-    font-size: 14px;
-    margin-top: 8px;
-}
-
-/* Success message styles */
 .success {
-    color: #2ecc71;
-    font-size: 14px;
-    margin-top: 8px;
+    color: green;
+}
+
+.error {
+    color: red;
 }

@@ -25,6 +25,10 @@ export default function PaymentButton() {
     return (
         <Elements stripe={stripePromise}>
             <div className="payment-form">
+                <div className="progress-bar">
+                    <div className="progress" style={{ width: '50%' }}></div>
+                    <span>50% completed</span>
+                </div>
                 <div className="card-type-selection">
                     <label>
                         <input
@@ -45,7 +49,6 @@ export default function PaymentButton() {
                         Debit Card
                     </label>
                 </div>
-                <h2>Payment Details</h2>
                 <CheckoutForm
                     cartTotal={cartTotal}
                     userProgressCtx={userProgressCtx}
@@ -68,8 +71,10 @@ function CheckoutForm({ cartTotal, userProgressCtx, handlePaymentStatus, selecte
     const elements = useElements();
     const [loading, setLoading] = useState(false); // State to manage loading state
     const [errorMessage, setErrorMessage] = useState(null); // State to manage error message
+    const [cardNumber, setCardNumber] = useState('');
     const [expiry, setExpiry] = useState('');
     const [cvv, setCvv] = useState('');
+    const [nameOnCard, setNameOnCard] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -101,7 +106,7 @@ function CheckoutForm({ cartTotal, userProgressCtx, handlePaymentStatus, selecte
                 payment_method: {
                     card: elements.getElement(CardElement),
                     billing_details: {
-                        name: 'Test User',
+                        name: nameOnCard,
                     },
                 },
             });
@@ -126,51 +131,57 @@ function CheckoutForm({ cartTotal, userProgressCtx, handlePaymentStatus, selecte
 
     return (
         <form onSubmit={handleSubmit} className="payment-form">
-            <div className="expiry-cvv">
-                <div className="expiry">
-                    <label htmlFor="expiry">Valid Upto</label>
+            <div className="card-details">
+                <label>
+                    Card number
                     <input
                         type="text"
-                        id="expiry"
-                        name="expiry"
-                        value={expiry}
-                        onChange={(e) => setExpiry(e.target.value)}
-                        placeholder="MM/YY"
-                        maxLength="5"
+                        value={cardNumber}
+                        onChange={(e) => setCardNumber(e.target.value)}
+                        placeholder="Card number"
                         required
                     />
+                </label>
+                <div className="expiry-cvv">
+                    <div className="expiry">
+                        <label>
+                            MM/YY
+                            <input
+                                type="text"
+                                value={expiry}
+                                onChange={(e) => setExpiry(e.target.value)}
+                                placeholder="MM/YY"
+                                required
+                            />
+                        </label>
+                    </div>
+                    <div className="cvv">
+                        <label>
+                            CVV
+                            <input
+                                type="text"
+                                value={cvv}
+                                onChange={(e) => setCvv(e.target.value)}
+                                placeholder="CVV"
+                                required
+                            />
+                        </label>
+                    </div>
                 </div>
-                <div className="cvv">
-                    <label htmlFor="cvv">CVV</label>
+                <label>
+                    Name on card
                     <input
                         type="text"
-                        id="cvv"
-                        name="cvv"
-                        value={cvv}
-                        onChange={(e) => setCvv(e.target.value)}
-                        placeholder="CVV"
-                        maxLength="4"
+                        value={nameOnCard}
+                        onChange={(e) => setNameOnCard(e.target.value)}
+                        placeholder="Name on card"
                         required
                     />
-                </div>
+                </label>
             </div>
-            <CardElement className="StripeElement" options={{
-                style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#424770',
-                        '::placeholder': {
-                            color: '#aab7c4',
-                        },
-                    },
-                    invalid: {
-                        color: '#9e2146',
-                    },
-                },
-            }} />
             {errorMessage && <p className="error">{errorMessage}</p>}
-            <button type="submit" disabled={!stripe || loading}>
-                {loading ? 'Processing...' : `Pay Now ${currencyFormatter.format(cartTotal)}`}
+            <button type="submit" className="save-button" disabled={!stripe || loading}>
+                {loading ? 'Processing...' : 'Save and continue'}
             </button>
         </form>
     );
